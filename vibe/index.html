@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System with Orbital Camera</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            display: grid;
+            grid-template-columns: repeat(3, 40px);
+            grid-gap: 5px;
+        }
+        #controls button {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border: 1px solid #666;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #controls button:hover {
+            background-color: #555;
+        }
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+        #info-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        #info-content {
+            font-size: 14px;
+        }
+        #instructions {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="instructions">
+        Click and drag to orbit • Scroll to zoom • Click on planets for info
+    </div>
+    
+    <div id="info-panel" style="display: none;">
+        <div id="info-header">
+            <h3 id="planet-name">Planet</h3>
+            <button id="close-info" onclick="hideInfoPanel()">×</button>
+        </div>
+        <div id="info-content"></div>
+    </div>
+    
+    <div id="controls">
+        <button onclick="cameraUp()">↑</button>
+        <button onclick="resetCamera()">⟲</button>
+        <button onclick="zoomIn()">+</button>
+        <button onclick="cameraLeft()">←</button>
+        <button onclick="cameraDown()">↓</button>
+        <button onclick="cameraRight()">→</button>
+        <button onclick="zoomOut()">-</button>
+    </div>
+    
+    <script src="sketch.js"></script>
+</body>
+</html>
