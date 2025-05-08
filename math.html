@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math was here</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        input {
+            text-align: right;
+            width: 4em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello Math!</h1>
+    <p>
+        \[\sqrt{2} = 1+\frac{1}{2+\frac{1}{2 + \dots}}\]
+    </p>
+
+    <h2>Quadratic Solver</h2>
+    <p>
+  When \(a \ne 0\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+  \[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]
+  </p>
+  <p>So, let's find some!</p>
+<p>
+    <input type="number" id="a" placeholder="a">\(x^2 + \)
+    <input type="number" id="b" placeholder="b">\(x + \)
+    <input type="number" id="c" placeholder="c">\(= 0\)
+    </p>
+    <p>
+    <input type="button" value="solve" onclick="solve();">
+</p>
+
+    <p id="fromJS"></p>
+    <script>
+
+        function hcf(a, b) {
+            if (b == 0) {
+                return a;
+            }
+            return hcf(b, a % b);
+        }
+
+        function solve() {
+
+            let a = document.getElementById("a").valueAsNumber;
+            let b = document.getElementById("b").valueAsNumber;
+            let c = document.getElementById("c").valueAsNumber;
+            if (a == 0) {
+                alert("a cannot be zero");
+                return;
+            }
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                alert("Please enter numbers");
+                return;
+            }
+            let discriminant = b*b - 4*a*c;
+            if (discriminant < 0) {
+                alert("No real roots");
+                return;
+            }
+            let result = "x = \\dfrac{ -" + b + " \\pm \\sqrt{" + discriminant + "}}{" + 2*a + "}";
+
+            let sqrt_discriminant = Math.sqrt(discriminant);
+            if (sqrt_discriminant % 1 == 0) {
+                result_pos = -b + sqrt_discriminant;
+                result_neg = -b - sqrt_discriminant;
+                let hcf_pos = hcf(result_pos, 2*a);
+                let hcf_neg = hcf(result_neg, 2*a);
+                if (hcf_pos != 1) {
+                    result_pos = result_pos / hcf_pos;
+                    result_neg = result_neg / hcf_neg;
+                    a = a / hcf_pos;
+                }
+                if (2*a == 1) {
+                    result = "x = " + result_pos + " , " + result_neg;
+                }
+                else {
+
+                result = "x = \\dfrac{ " + result_pos + "}{ " + 2*a + "} , \\dfrac{ " + result_neg + "}{ " + 2*a + "}";
+ }
+            } else {
+                let sqrt_discriminant = Math.sqrt(discriminant);
+                let hcf_pos = hcf(-b, 2*a);
+                let hcf_neg = hcf(-b, 2*a);
+                if (hcf_pos != 1) {
+                    result_pos = -b / hcf_pos;
+                    result_neg = -b / hcf_neg;
+                    a = a / hcf_pos;
+                }
+                result = "x = \\dfrac{ " + result_pos + " \\pm \\sqrt{" + discriminant + "}}{ " + 2*a + "}";
+
+            }
+
+
+            
+          
+            document.getElementById("fromJS").innerHTML = "\\(" + result + "\\)";
+            MathJax.typesetPromise();
+
+        }
+
+
+
+    </script>
+</body>
+</html>
